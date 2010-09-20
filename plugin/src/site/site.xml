@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+	<body>
+		<menu ref="parent" />
+		<menu ref="reports" />
+		<menu ref="modules" />
+		<menu name="Additional resources">
+			<item name="Confluence documentation" href="http://confluence.highsource.org/display/MSTP/Documentation"/>
+		</menu>
+	</body>
+</project>
