@@ -1,0 +1,1 @@
+mvn storyteller:display-dependency-graph -DgroupId=org.hibernate -DartifactId=hibernate-core -Dversion=3.3.2.GA -DrepositoryURL=http://repository.jboss.com/maven2

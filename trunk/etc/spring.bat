@@ -1,0 +1,1 @@
+call mvn storyteller:export-dependency-graph -Dfile=spring.png -DgroupId=org.springframework -DartifactId=spring -Dversion=2.5.6

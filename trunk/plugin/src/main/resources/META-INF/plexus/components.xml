@@ -1,0 +1,19 @@
+<component-set>
+	<components>
+		<component>
+			<role>org.highsource.storyteller.artifact.graph.ArtifactGraphBuilder</role>
+			<implementation>org.highsource.storyteller.artifact.graph.DefaultArtifactGraphBuilder</implementation>
+			<instantiation-strategy>per-lookup</instantiation-strategy>
+			<requirements>
+				<requirement>
+					<role>org.apache.maven.artifact.resolver.ArtifactResolver</role>
+					<field-name>artifactResolver</field-name>
+				</requirement>
+				<requirement>
+					<role>org.apache.maven.artifact.metadata.ArtifactMetadataSource</role>
+					<field-name>artifactMetadataSource</field-name>
+				</requirement>
+			</requirements>
+		</component>
+	</components>
+</component-set>
