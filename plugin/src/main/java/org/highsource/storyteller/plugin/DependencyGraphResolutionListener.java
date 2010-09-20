@@ -19,6 +19,7 @@ public class DependencyGraphResolutionListener implements ResolutionListener {
 
 	private final DirectedGraph<Artifact, DefaultEdge> graph;
 
+	@SuppressWarnings("unused")
 	private final Logger logger;
 
 	public DependencyGraphResolutionListener(Logger logger) {
