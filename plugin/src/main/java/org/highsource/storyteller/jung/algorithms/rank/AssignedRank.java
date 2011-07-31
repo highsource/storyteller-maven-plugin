@@ -8,6 +8,7 @@ import java.util.Set;
 
 import org.apache.commons.collections15.MultiMap;
 import org.apache.commons.collections15.multimap.MultiHashMap;
+import org.apache.commons.lang.Validate;
 
 public class AssignedRank<V> implements Rank<V> {
 
@@ -16,7 +17,8 @@ public class AssignedRank<V> implements Rank<V> {
 	private final Map<V, Integer> vertexRanks = new HashMap<V, Integer>();
 	private final MultiMap<Integer, V> ranks = new MultiHashMap<Integer, V>();
 
-	public void assignRank(V vertex, int rank) {
+	@Override
+	public void setRank(V vertex, int rank) {
 		this.vertices.add(vertex);
 		final Integer currentRank = this.vertexRanks.get(vertex);
 		if (currentRank != null) {
@@ -40,10 +42,20 @@ public class AssignedRank<V> implements Rank<V> {
 		return ranks.get(rank);
 	}
 
+	@Override
+	public void shift(Collection<V> vertices, int delta) {
+		Validate.notNull(vertices);
+		for (V vertex : vertices) {
+			setRank(vertex, getRank(vertex) - delta);
+		}
+
+	}
+
+	@Override
 	public void normalize() {
 		if (minimalRank != 0) {
 			for (V vertex : vertices) {
-				assignRank(vertex, getRank(vertex) - minimalRank);
+				setRank(vertex, getRank(vertex) - minimalRank);
 			}
 			minimalRank = 0;
 		}

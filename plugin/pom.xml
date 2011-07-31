@@ -2,15 +2,15 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.highsource.storyteller</groupId>
+	<groupId>org.hisrc.storyteller</groupId>
 	<artifactId>maven-storyteller-plugin</artifactId>
 	<packaging>maven-plugin</packaging>
 	<name>Maven Storyteller Plugin</name>
 	<url>http://static.highsource.org/storyteller/plugin</url>
 	<parent>
-		<groupId>org.highsource.storyteller</groupId>
+		<groupId>org.hisrc.storyteller</groupId>
 		<artifactId>maven-storyteller-plugin-project</artifactId>
-		<version>0.1-SNAPSHOT</version>
+		<version>1.0-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<distributionManagement>
@@ -22,6 +22,18 @@
 		<dependency>
 			<groupId>org.jgrapht</groupId>
 			<artifactId>jgrapht-jdk1.5</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.jung</groupId>
+			<artifactId>jung-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.jung</groupId>
+			<artifactId>jung-graph-impl</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.jung</groupId>
+			<artifactId>jung-algorithms</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>net.sourceforge.collections</groupId>
@@ -47,6 +59,16 @@
 			<groupId>org.apache.maven.shared</groupId>
 			<artifactId>maven-plugin-testing-harness</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.6</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.jung</groupId>
+			<artifactId>jung-visualization</artifactId>
+			<version>2.0.1</version>
 		</dependency>
 	</dependencies>
 	<reporting>

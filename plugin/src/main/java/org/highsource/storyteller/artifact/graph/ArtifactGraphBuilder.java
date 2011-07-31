@@ -19,10 +19,9 @@ public interface ArtifactGraphBuilder {
 
 	public DirectedGraph<Artifact, DefaultEdge> buildArtifactGraph(
 			Set<Artifact> artifacts, Artifact originatingArtifact,
-			Map managedVersions, ArtifactRepository localRepository,
+			Map<?, ?> managedVersions, ArtifactRepository localRepository,
 			List<ArtifactRepository> remoteRepositories,
 			ArtifactMetadataSource source, ArtifactFilter filter,
-			List<ResolutionListener> listeners,
-			Logger logger)
+			List<ResolutionListener> listeners, Logger logger)
 			throws ArtifactNotFoundException, ArtifactResolutionException;
 }
