@@ -25,9 +25,10 @@ public class DefaultArtifactGraphBuilder implements ArtifactGraphBuilder {
 
 	private ArtifactMetadataSource artifactMetadataSource;
 
+	@Override
 	public DirectedGraph<Artifact, DefaultEdge> buildArtifactGraph(
 			Set<Artifact> artifacts, Artifact originatingArtifact,
-			Map managedVersions, ArtifactRepository localRepository,
+			Map<?, ?> managedVersions, ArtifactRepository localRepository,
 			List<ArtifactRepository> remoteRepositories,
 			ArtifactMetadataSource source, ArtifactFilter filter,
 			List<ResolutionListener> listeners, Logger logger)
@@ -39,8 +40,7 @@ public class DefaultArtifactGraphBuilder implements ArtifactGraphBuilder {
 				logger);
 
 		final List<ResolutionListener> moreListeners = listeners != null ? new ArrayList<ResolutionListener>(
-				listeners)
-				: new ArrayList<ResolutionListener>(2);
+				listeners) : new ArrayList<ResolutionListener>(2);
 		moreListeners.add(dependencyGraphResolutionListener);
 
 		moreListeners.add(debugResolutionListener);

@@ -35,26 +35,29 @@ public class ExportDependencyGraphMojo extends AbstractDependencyGraphMojo {
 		this.file = file;
 	}
 
-	/**
-	 * The plugin uses GraphViz package to render graphs in formats like PDF and
-	 * so on. For this to work, you'll need to specify the path to the
-	 * executable <code>dot</code> of GraphViz in this property.
-	 */
-	@MojoParameter(expression = "${graphViz.dotFile}")
-	public File getGraphVizDotFile() {
-		return graphVizDotFile;
-	}
+	// /**
+	// * The plugin uses GraphViz package to render graphs in formats like PDF
+	// and
+	// * so on. For this to work, you'll need to specify the path to the
+	// * executable <code>dot</code> of GraphViz in this property.
+	// */
+	// @MojoParameter(expression = "${graphViz.dotFile}")
+	// public File getGraphVizDotFile() {
+	// return graphVizDotFile;
+	// }
+	//
+	// public void setGraphVizDotFile(File dot) {
+	// this.graphVizDotFile = dot;
+	// }
 
-	public void setGraphVizDotFile(File dot) {
-		this.graphVizDotFile = dot;
-	}
-
+	@Override
 	public void execute() throws MojoExecutionException, MojoFailureException {
 		super.execute();
 
 		// Create a graph exporter
 		this.graphExporter = new AutoGraphExporter<Artifact, DefaultEdge>(
-				getGraphVizDotFile());
+		// getGraphVizDotFile()
+		);
 		// Export archive dependency graph
 		try {
 			this.graphExporter.exportGraph(artifactGraph,
