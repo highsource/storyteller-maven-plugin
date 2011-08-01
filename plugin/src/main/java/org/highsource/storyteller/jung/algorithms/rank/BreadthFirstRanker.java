@@ -31,8 +31,9 @@ public class BreadthFirstRanker<V, E> {
 		return distance.intValue();
 	}
 
-	public Rank<V> createRank(DirectedGraph<V, E> graph) {
-		final Rank<V> rank = new AssignedRank<V>();
+	public Rank<V, E> createRank(DirectedGraph<V, E> graph) {
+		final Rank<V, E> rank = new AssignedRank<V, E>(
+				this.minimumDistanceConstraint);
 		final Collection<V> sinks = DirectedGraphUtils.findSinks(graph);
 		Validate.isTrue(!sinks.isEmpty());
 

@@ -2,7 +2,7 @@ package org.highsource.storyteller.jung.algorithms.rank;
 
 import java.util.Collection;
 
-public interface Rank<V> {
+public interface Rank<V, E> {
 
 	public Integer getRank(V vertex);
 
@@ -14,4 +14,5 @@ public interface Rank<V> {
 
 	public void normalize();
 
+	public int getSlack(E nonTreeEdge, final V source, final V dest);
 }
