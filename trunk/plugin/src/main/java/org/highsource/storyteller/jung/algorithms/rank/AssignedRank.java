@@ -7,15 +7,22 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.collections15.MultiMap;
+import org.apache.commons.collections15.Transformer;
 import org.apache.commons.collections15.multimap.MultiHashMap;
 import org.apache.commons.lang.Validate;
 
-public class AssignedRank<V> implements Rank<V> {
+public class AssignedRank<V, E> implements Rank<V, E> {
 
+	private final Transformer<E, Integer> minimumDistanceConstraint;
 	private int minimalRank = 0;
 	private final Set<V> vertices = new HashSet<V>();
 	private final Map<V, Integer> vertexRanks = new HashMap<V, Integer>();
 	private final MultiMap<Integer, V> ranks = new MultiHashMap<Integer, V>();
+
+	public AssignedRank(Transformer<E, Integer> minimumDistanceConstraint) {
+		Validate.notNull(minimumDistanceConstraint);
+		this.minimumDistanceConstraint = minimumDistanceConstraint;
+	}
 
 	@Override
 	public void setRank(V vertex, int rank) {
@@ -59,6 +66,29 @@ public class AssignedRank<V> implements Rank<V> {
 			}
 			minimalRank = 0;
 		}
-
 	}
+
+	@Override
+	public int getSlack(E edge, final V source, final V dest) {
+		Validate.notNull(edge);
+		Validate.notNull(source);
+		Validate.notNull(dest);
+		Validate.notNull(minimumDistanceConstraint);
+		Integer sourceRank = getRank(source);
+		Integer destRank = getRank(dest);
+		Validate.notNull(sourceRank, "Source vertex must have been ranked.");
+		Validate.notNull(destRank, "Dest vertex must have been ranked.");
+		final int slack = Math.abs(sourceRank.intValue() - destRank.intValue())
+				- getMinimumDistance(edge);
+		return slack;
+	}
+
+	private int getMinimumDistance(E edge) {
+		Validate.notNull(edge);
+		Validate.notNull(minimumDistanceConstraint);
+		final Integer distance = minimumDistanceConstraint.transform(edge);
+		Validate.notNull(distance);
+		return distance.intValue();
+	}
+
 }
