@@ -14,12 +14,13 @@ import edu.uci.ics.jung.graph.DirectedGraph;
 
 public class BreadthFirstRanker<V, E> {
 
-	// private final DirectedGraph<V, E> graph;
 	private final Transformer<E, Integer> minimumDistanceConstraint;
 
-	public BreadthFirstRanker(
-	// DirectedGraph<V, E> graph,
-			Transformer<E, Integer> minimumDistanceConstraint) {
+	public BreadthFirstRanker() {
+		this(ConstantTransformer.<E> one());
+	}
+
+	public BreadthFirstRanker(Transformer<E, Integer> minimumDistanceConstraint) {
 		Validate.notNull(minimumDistanceConstraint);
 		this.minimumDistanceConstraint = minimumDistanceConstraint;
 	}
@@ -31,8 +32,9 @@ public class BreadthFirstRanker<V, E> {
 		return distance.intValue();
 	}
 
-	public Rank<V, E> createRank(DirectedGraph<V, E> graph) {
-		final Rank<V, E> rank = new AssignedRank<V, E>(
+	public Rank<V, E> rank(DirectedGraph<V, E> graph) {
+		Validate.notNull(graph);
+		final Rank<V, E> rank = new AssignedRank<V, E>(graph,
 				this.minimumDistanceConstraint);
 		final Collection<V> sinks = DirectedGraphUtils.findSinks(graph);
 		Validate.isTrue(!sinks.isEmpty());

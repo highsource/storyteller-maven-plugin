@@ -17,25 +17,25 @@ import org.highsource.storyteller.jung.traverse.PreOrderIterator;
 import edu.uci.ics.jung.graph.DirectedGraph;
 import edu.uci.ics.jung.graph.Tree;
 
-public class OptimalFeasibleTreeRanker<V, E> {
+public class OptimalFeasibleTreeReranker<V, E> implements Reranker<V, E> {
 
-	private final Transformer<E, Integer> minimumDistance;
 	private final Transformer<E, Integer> weight;
 
-	public OptimalFeasibleTreeRanker() {
-		this(ConstantTransformer.<E> one(), ConstantTransformer.<E> one());
+	public OptimalFeasibleTreeReranker() {
+		this(ConstantTransformer.<E> one());
 	}
 
-	public OptimalFeasibleTreeRanker(Transformer<E, Integer> minimumDistance,
-			Transformer<E, Integer> weight) {
-		this.minimumDistance = minimumDistance;
+	public OptimalFeasibleTreeReranker(Transformer<E, Integer> weight) {
 		this.weight = weight;
 	}
 
-	public Rank<V, E> createRank(DirectedGraph<V, E> graph) {
+	@Override
+	public Rank<V, E> rerank(Rank<V, E> rank) {
+		//
+		// final Rank<V, E> rank = new BreadthFirstRanker<V, E>(minimumDistance)
+		// .rank(graph);
 
-		final Rank<V, E> rank = new BreadthFirstRanker<V, E>(minimumDistance)
-				.createRank(graph);
+		final DirectedGraph<V, E> graph = rank.getGraph();
 
 		final TightTreeCreator<V, E> tightTreeCreator = new TightTreeCreator<V, E>();
 
