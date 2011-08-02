@@ -11,17 +11,30 @@ import org.apache.commons.collections15.Transformer;
 import org.apache.commons.collections15.multimap.MultiHashMap;
 import org.apache.commons.lang.Validate;
 
+import edu.uci.ics.jung.graph.DirectedGraph;
+
 public class AssignedRank<V, E> implements Rank<V, E> {
 
+	public final static int ABSENT_RANK = Integer.MIN_VALUE;
+
+	private final DirectedGraph<V, E> graph;
 	private final Transformer<E, Integer> minimumDistanceConstraint;
 	private int minimalRank = 0;
 	private final Set<V> vertices = new HashSet<V>();
 	private final Map<V, Integer> vertexRanks = new HashMap<V, Integer>();
 	private final MultiMap<Integer, V> ranks = new MultiHashMap<Integer, V>();
 
-	public AssignedRank(Transformer<E, Integer> minimumDistanceConstraint) {
+	public AssignedRank(DirectedGraph<V, E> graph,
+			Transformer<E, Integer> minimumDistanceConstraint) {
+		Validate.notNull(graph);
 		Validate.notNull(minimumDistanceConstraint);
+		this.graph = graph;
 		this.minimumDistanceConstraint = minimumDistanceConstraint;
+	}
+
+	@Override
+	public DirectedGraph<V, E> getGraph() {
+		return graph;
 	}
 
 	@Override
@@ -39,9 +52,13 @@ public class AssignedRank<V, E> implements Rank<V, E> {
 	}
 
 	@Override
-	public Integer getRank(V vertex) {
+	public int getRank(V vertex) {
 		final Integer rank = vertexRanks.get(vertex);
-		return rank;
+		if (rank == null) {
+			return ABSENT_RANK;
+		} else {
+			return rank.intValue();
+		}
 	}
 
 	@Override
@@ -83,9 +100,25 @@ public class AssignedRank<V, E> implements Rank<V, E> {
 		return slack;
 	}
 
+	@Override
+	public int getSlack(E edge) {
+		Validate.notNull(edge);
+		Validate.isTrue(getGraph().containsEdge(edge));
+		final V source = getGraph().getSource(edge);
+		final V dest = getGraph().getDest(edge);
+		final int sourceRank = getRank(source);
+		final int destRank = getRank(dest);
+		Validate.isTrue(sourceRank != ABSENT_RANK,
+				"Source vertex must have been ranked.");
+		Validate.isTrue(sourceRank != ABSENT_RANK,
+				"Dest vertex must have been ranked.");
+		final int slack = Math.abs(sourceRank - destRank)
+				- getMinimumDistance(edge);
+		return slack;
+	}
+
 	private int getMinimumDistance(E edge) {
 		Validate.notNull(edge);
-		Validate.notNull(minimumDistanceConstraint);
 		final Integer distance = minimumDistanceConstraint.transform(edge);
 		Validate.notNull(distance);
 		return distance.intValue();
