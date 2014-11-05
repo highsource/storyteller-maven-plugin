@@ -1,2 +1,2 @@
-call mvn storyteller:export-dependency-graph -Dfile=hyperjaxb3.png -DgroupId=org.jvnet.hyperjaxb3 -DartifactId=hyperjaxb3-ejb-plugin -Dversion=0.5.3 -DrepositoryURL=http://download.java.net/maven/2
-call mvn storyteller:analyze-dependency-graph -DgroupId=org.jvnet.hyperjaxb3 -DartifactId=hyperjaxb3-ejb-plugin -Dversion=0.5.3 -DrepositoryURL=http://download.java.net/maven/2
+call mvn org.hisrc.storyteller:maven-storyteller-plugin:export-dependency-graph -Dfile=hyperjaxb3.png -DgroupId=org.jvnet.hyperjaxb3 -DartifactId=hyperjaxb3-ejb-plugin -Dversion=0.5.6
+call mvn org.hisrc.storyteller:maven-storyteller-plugin:analyze-dependency-graph -DgroupId=org.jvnet.hyperjaxb3 -DartifactId=hyperjaxb3-ejb-plugin -Dversion=0.5.6
