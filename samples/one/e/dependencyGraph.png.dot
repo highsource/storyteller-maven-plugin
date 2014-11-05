@@ -1,0 +1,16 @@
+digraph G {
+  1 [label = "org.hisrc.storyteller:sample-one-e:jar:1.0-SNAPSHOT"];
+  2 [label = "org.hisrc.storyteller:sample-one-a:jar:1.0-SNAPSHOT"];
+  3 [label = "org.hisrc.storyteller:sample-one-d:jar:1.0-SNAPSHOT"];
+  4 [label = "org.hisrc.storyteller:sample-one-b:jar:1.0-SNAPSHOT"];
+  5 [label = "org.hisrc.storyteller:sample-one-c:jar:1.0-SNAPSHOT"];
+  1 -> 2;
+  1 -> 3;
+  1 -> 4;
+  4 -> 2;
+  3 -> 4;
+  1 -> 5;
+  5 -> 2;
+  5 -> 4;
+  3 -> 5;
+}

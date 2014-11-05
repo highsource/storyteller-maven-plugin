@@ -1,1 +1,1 @@
-mvn org.highsource.storyteller:maven-storyteller-plugin:display-dependency-graph
+mvn org.hisrc.storyteller:maven-storyteller-plugin:display-dependency-graph
