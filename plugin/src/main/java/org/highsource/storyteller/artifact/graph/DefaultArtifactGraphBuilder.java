@@ -15,9 +15,7 @@ import org.apache.maven.artifact.resolver.DebugResolutionListener;
 import org.apache.maven.artifact.resolver.ResolutionListener;
 import org.apache.maven.artifact.resolver.filter.ArtifactFilter;
 import org.codehaus.plexus.logging.Logger;
-import org.highsource.storyteller.plugin.DependencyGraphResolutionListener;
 import org.jgrapht.DirectedGraph;
-import org.jgrapht.graph.DefaultEdge;
 
 public class DefaultArtifactGraphBuilder implements ArtifactGraphBuilder {
 
@@ -25,22 +23,22 @@ public class DefaultArtifactGraphBuilder implements ArtifactGraphBuilder {
 
 	private ArtifactMetadataSource artifactMetadataSource;
 
-	@Override
-	public DirectedGraph<Artifact, DefaultEdge> buildArtifactGraph(
+	@SuppressWarnings("rawtypes")
+	public DirectedGraph<Artifact, VersionedEdge> buildArtifactGraph(
 			Set<Artifact> artifacts, Artifact originatingArtifact,
-			Map<?, ?> managedVersions, ArtifactRepository localRepository,
+			Map managedVersions, ArtifactRepository localRepository,
 			List<ArtifactRepository> remoteRepositories,
 			ArtifactMetadataSource source, ArtifactFilter filter,
 			List<ResolutionListener> listeners, Logger logger)
 			throws ArtifactNotFoundException, ArtifactResolutionException {
 
-		final DependencyGraphResolutionListener dependencyGraphResolutionListener = new DependencyGraphResolutionListener(
-				logger);
-		final DebugResolutionListener debugResolutionListener = new DebugResolutionListener(
-				logger);
+		final DependencyGraphResolutionListener dependencyGraphResolutionListener =
+				new DependencyGraphResolutionListener(logger);
+		final DebugResolutionListener debugResolutionListener = new DebugResolutionListener(logger);
 
-		final List<ResolutionListener> moreListeners = listeners != null ? new ArrayList<ResolutionListener>(
-				listeners) : new ArrayList<ResolutionListener>(2);
+		final List<ResolutionListener> moreListeners = (listeners != null)
+				? new ArrayList<ResolutionListener>(listeners)
+				: new ArrayList<ResolutionListener>(2);
 		moreListeners.add(dependencyGraphResolutionListener);
 
 		moreListeners.add(debugResolutionListener);
@@ -48,8 +46,6 @@ public class DefaultArtifactGraphBuilder implements ArtifactGraphBuilder {
 				managedVersions, localRepository, remoteRepositories,
 				artifactMetadataSource, filter, moreListeners);
 
-		final DirectedGraph<Artifact, DefaultEdge> graph = dependencyGraphResolutionListener
-				.getGraph();
-		return graph;
+		return dependencyGraphResolutionListener.getGraph();
 	}
 }

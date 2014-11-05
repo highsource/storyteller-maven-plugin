@@ -8,16 +8,16 @@ import java.io.Writer;
 import org.apache.maven.plugin.logging.Log;
 import org.jgrapht.DirectedGraph;
 import org.jgrapht.ext.DOTExporter;
+import org.jgrapht.ext.EdgeNameProvider;
 import org.jgrapht.ext.IntegerNameProvider;
 import org.jgrapht.ext.VertexNameProvider;
 
 public class DOTGraphExporter<V, E> implements GraphExporter<V, E> {
 
-	public void exportGraph(DirectedGraph<V, E> graph,
-			VertexNameProvider<V> vertexNameProvider, File targetFile, Log log)
-			throws IOException {
-		final DOTExporter<V, E> exporter = new DOTExporter<V, E>(
-				new IntegerNameProvider<V>(), vertexNameProvider, null);
+	public void exportGraph(DirectedGraph<V, E> graph, VertexNameProvider<V> vertexLabelProvider,
+			EdgeNameProvider<E> edgeLabelProvider, File targetFile, Log log) throws IOException {
+		final DOTExporter<V, E> exporter = new DOTExporter<V, E>(new IntegerNameProvider<V>(), vertexLabelProvider,
+				edgeLabelProvider);
 		Writer writer = null;
 		try {
 			targetFile.getParentFile().mkdirs();
