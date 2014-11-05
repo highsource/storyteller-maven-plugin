@@ -2,9 +2,11 @@ package org.highsource.storyteller.jung.algorithms.rank.tests;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.highsource.storyteller.jung.algorithms.rank.BreadthFirstRanker;
 import org.highsource.storyteller.jung.algorithms.rank.GreedyBalancingReranker;
@@ -50,7 +52,6 @@ public class DotRankFactoryTest {
 		dag.addEdge("g-h", "g", "h");
 
 		final Rank<String, String> rank = rank(dag);
-
 		assertEquals(4, rank.getRank("a"));
 
 		assertEquals(3, rank.getRank("b"));
@@ -129,19 +130,10 @@ public class DotRankFactoryTest {
 	}
 
 	@Test
-	public void rank03() {
-		DirectedGraph<String, String> graph = createGraph("S8 -> 9; S24 -> 27; S24 -> 25; S1 -> 10; S1 -> 2; S35 -> 36;"
-				+ "S35 -> 43; S30 -> 31; S30 -> 33; 9 -> 42; 9 -> T1; 25 -> T1;"
-				+ "25 -> 26; 27 -> T24; 2 -> 3; 2 -> 16; 2 -> 17; 2 -> T1; 2 -> 18;"
-				+ "10 -> 11; 10 -> 14; 10 -> T1; 10 -> 13; 10 -> 12;"
-				+ "31 -> T1; 31 -> 32; 33 -> T30; 33 -> 34; 42 -> 4; 26 -> 4;"
-				+ "3 -> 4; 16 -> 15; 17 -> 19; 18 -> 29; 11 -> 4; 14 -> 15;"
-				+ "37 -> 39; 37 -> 41; 37 -> 38; 37 -> 40; 13 -> 19; 12 -> 29;"
-				+ "43 -> 38; 43 -> 40; 36 -> 19; 32 -> 23; 34 -> 29; 39 -> 15;"
-				+ "41 -> 29; 38 -> 4; 40 -> 19; 4 -> 5; 19 -> 21; 19 -> 20;"
-				+ "19 -> 28; 5 -> 6; 5 -> T35; 5 -> 23; 21 -> 22; 20 -> 15; 28 -> 29;"
-				+ "6 -> 7; 15 -> T1; 22 -> 23; 22 -> T35; 29 -> T30; 7 -> T8;"
-				+ "23 -> T24; 23 -> T1");
+	public void rank03() throws IOException {
+		final String text = IOUtils.toString(getClass().getResourceAsStream(
+				"graph03.txt"));
+		DirectedGraph<String, String> graph = createGraph(text);
 
 		final Rank<String, String> rank = rank(graph);
 		Assert.assertEquals(8, rank.getRank("S1"));
